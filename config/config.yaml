@@ -1,0 +1,46 @@
+project:
+  name: house_price_prediction
+  random_state: 42
+
+data:
+  path: data/train.csv
+  target_column: SalePrice
+  test_size: 0.2
+  feature_columns:
+    - OverallQual
+    - GrLivArea
+    - GarageCars
+    - GarageArea
+    - TotalBsmtSF
+    - FullBath
+    - YearBuilt
+    - YearRemodAdd
+    - LotArea
+    - Neighborhood
+    - HouseStyle
+    - ExterQual
+    - KitchenQual
+    - BsmtQual
+    - GarageFinish
+
+model:
+  type: random_forest
+  params:
+    n_estimators: 200
+    max_depth: 16
+    min_samples_split: 2
+    min_samples_leaf: 1
+    random_state: 42
+
+mlflow:
+  tracking_uri: mlruns
+  experiment_name: house_price_prediction
+  log_model_artifact: false
+
+artifacts:
+  directory: artifacts
+  model_path: artifacts/model.joblib
+  preprocessor_path: artifacts/preprocessor.joblib
+
+logging:
+  level: INFO

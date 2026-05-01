@@ -1,0 +1,145 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>House Price Prediction</title>
+    <link rel="stylesheet" href="/static/app.css" />
+  </head>
+  <body>
+    <main class="shell">
+      <header class="topbar">
+        <div>
+          <p class="eyebrow">Kaggle Ames Housing</p>
+          <h1>House Price Prediction</h1>
+        </div>
+        <div class="status" id="modelStatus">Checking model...</div>
+      </header>
+
+      <section class="workspace" aria-label="Prediction workspace">
+        <form id="predictionForm" class="form-panel">
+          <div class="section-title">
+            <h2>Property Inputs</h2>
+            <button type="button" class="secondary" id="resetButton">Reset</button>
+          </div>
+
+          <div class="grid">
+            <label>
+              Overall Quality
+              <input name="OverallQual" type="number" min="1" max="10" step="1" value="7" required />
+            </label>
+            <label>
+              Living Area
+              <input name="GrLivArea" type="number" min="1" step="1" value="1710" required />
+            </label>
+            <label>
+              Garage Cars
+              <input name="GarageCars" type="number" min="0" step="1" value="2" required />
+            </label>
+            <label>
+              Garage Area
+              <input name="GarageArea" type="number" min="0" step="1" value="548" required />
+            </label>
+            <label>
+              Basement Area
+              <input name="TotalBsmtSF" type="number" min="0" step="1" value="856" required />
+            </label>
+            <label>
+              Full Baths
+              <input name="FullBath" type="number" min="0" max="5" step="1" value="2" required />
+            </label>
+            <label>
+              Year Built
+              <input name="YearBuilt" type="number" min="1800" max="2100" step="1" value="2003" required />
+            </label>
+            <label>
+              Year Remodeled
+              <input name="YearRemodAdd" type="number" min="1800" max="2100" step="1" value="2003" required />
+            </label>
+            <label>
+              Lot Area
+              <input name="LotArea" type="number" min="1" step="1" value="8450" required />
+            </label>
+            <label>
+              Neighborhood
+              <select name="Neighborhood" required>
+                <option value="CollgCr">CollgCr</option>
+                <option value="Veenker">Veenker</option>
+                <option value="Crawfor">Crawfor</option>
+                <option value="NoRidge">NoRidge</option>
+                <option value="NridgHt">NridgHt</option>
+                <option value="Somerst">Somerst</option>
+              </select>
+            </label>
+            <label>
+              House Style
+              <select name="HouseStyle" required>
+                <option value="2Story">2Story</option>
+                <option value="1Story">1Story</option>
+                <option value="1.5Fin">1.5Fin</option>
+                <option value="SLvl">SLvl</option>
+              </select>
+            </label>
+            <label>
+              Exterior Quality
+              <select name="ExterQual" required>
+                <option value="Gd">Gd</option>
+                <option value="Ex">Ex</option>
+                <option value="TA">TA</option>
+                <option value="Fa">Fa</option>
+              </select>
+            </label>
+            <label>
+              Kitchen Quality
+              <select name="KitchenQual" required>
+                <option value="Gd">Gd</option>
+                <option value="Ex">Ex</option>
+                <option value="TA">TA</option>
+                <option value="Fa">Fa</option>
+              </select>
+            </label>
+            <label>
+              Basement Quality
+              <select name="BsmtQual">
+                <option value="Gd">Gd</option>
+                <option value="Ex">Ex</option>
+                <option value="TA">TA</option>
+                <option value="Fa">Fa</option>
+                <option value="">None</option>
+              </select>
+            </label>
+            <label>
+              Garage Finish
+              <select name="GarageFinish">
+                <option value="RFn">RFn</option>
+                <option value="Fin">Fin</option>
+                <option value="Unf">Unf</option>
+                <option value="">None</option>
+              </select>
+            </label>
+          </div>
+
+          <button type="submit" class="primary" id="submitButton">Predict Price</button>
+        </form>
+
+        <aside class="result-panel" aria-live="polite">
+          <p class="eyebrow">Predicted SalePrice</p>
+          <div class="price" id="predictionValue">$0</div>
+          <p class="muted" id="predictionMeta">Submit the form to get a prediction.</p>
+          <div class="divider"></div>
+          <dl>
+            <div>
+              <dt>Model</dt>
+              <dd id="modelVersion">local-joblib-v1</dd>
+            </div>
+            <div>
+              <dt>Endpoint</dt>
+              <dd>/predict</dd>
+            </div>
+          </dl>
+        </aside>
+      </section>
+    </main>
+    <script src="/static/app.js"></script>
+  </body>
+</html>
