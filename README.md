@@ -154,6 +154,10 @@ Fitur Streamlit:
 - visualisasi distribusi fitur dan korelasi
 - visualisasi performa model dengan RMSE, MAE, dan R2
 
+Untuk Streamlit Cloud, repo ini memakai `runtime.txt` agar deployment berjalan
+dengan Python 3.11. Ini mencegah package seperti `pandas` dan `pyarrow` dicompile
+dari source di Python yang terlalu baru.
+
 ## Testing
 
 ```bash
