@@ -132,6 +132,28 @@ mlflow ui --backend-store-uri mlruns --port 5000
 
 Lalu buka `http://localhost:5000`.
 
+## Streamlit Portfolio
+
+Jalankan aplikasi portfolio Streamlit:
+
+```bash
+streamlit run streamlit_app.py
+```
+
+Di Windows PowerShell:
+
+```powershell
+powershell -ExecutionPolicy Bypass -File scripts/run_streamlit.ps1
+```
+
+Fitur Streamlit:
+
+- halaman branding "My Portfolio with Streamlit"
+- bagian Tentang Saya dan Proyek Saya
+- upload CSV untuk prediksi harga rumah
+- visualisasi distribusi fitur dan korelasi
+- visualisasi performa model dengan RMSE, MAE, dan R2
+
 ## Testing
 
 ```bash

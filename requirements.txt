@@ -11,3 +11,4 @@ python-json-logger==3.2.1
 prometheus-client==0.21.1
 pytest==8.3.4
 kaggle==1.6.17
+streamlit==1.37.1
