@@ -139,21 +139,42 @@ def show_about() -> None:
     with col_left:
         st.markdown(
             """
-            **Nama:** Bridget Beatrix C.
+            **Nama:** Bridget Beatrix Claire
 
-            Saya sedang membangun portfolio data science dengan fokus pada
-            machine learning workflow, model deployment, dan aplikasi data
-            interaktif. Project ini memakai dataset House Prices Advanced
-            Regression Techniques untuk menunjukkan proses dari data loading,
-            preprocessing, training, tracking, hingga serving model.
+            Saya adalah Software Engineer dan UI/UX Designer dengan minat kuat
+            pada user experience, web development, dan artificial intelligence.
+            Saya bercita-cita menjadi software engineer dan researcher yang
+            mampu membangun solusi teknologi yang adaptif, bermanfaat, dan mudah
+            digunakan.
+
+            Saat ini saya menempuh Bachelor of Computer Science di Universitas
+            Ciputra Surabaya dengan CGPA 3.65/4.00, Cum Laude. Coursework saya
+            mencakup AI, web development, cyber security, dan entrepreneurship.
+            Saya juga mengikuti IISMA student exchange di Korea University dengan
+            course Deep Learning, Consumer Behaviour, Public Speaking in English,
+            dan Entrepreneurial Mindset.
+            """
+        )
+        st.markdown(
+            """
+            **Pengalaman:** Design & Front End Development di Rintisan, serta
+            Fullstack Developer Intern di BTPN Syariah x Rakamin Academy. Dalam
+            pengalaman tersebut, saya terlibat dalam redesign website, responsive
+            web design, dan penggunaan tools seperti JavaScript, MySQL, dan Git.
             """
         )
     with col_right:
         st.markdown("**Keahlian utama**")
-        st.write("- Python, Pandas, Scikit-learn")
-        st.write("- Streamlit, FastAPI, Docker")
-        st.write("- MLflow experiment tracking")
-        st.write("- Data visualization dan model evaluation")
+        st.write("- Python, SQL, Java, JavaScript")
+        st.write("- HTML, CSS, React")
+        st.write("- Machine Learning dan Deep Learning")
+        st.write("- Computer Vision")
+        st.write("- User Experience Design")
+        st.write("- English dan Indonesian")
+
+        st.markdown("**Achievement**")
+        st.write("- 1st place ExplorAItion Hackathon by Ministry of Communication and Information Technology")
+        st.write("- 3rd place IO Festival National Web Development Competition")
 
 
 def show_projects() -> None:
