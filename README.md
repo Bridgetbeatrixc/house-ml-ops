@@ -1,8 +1,16 @@
 # House Price Prediction MLOps
 
-Proyek ini berisi pipeline prediksi harga rumah berbasis dataset Kaggle House Prices - Advanced Regression Techniques yang modular, dilengkapi MLflow experiment tracking, structured logging, FastAPI serving, dan Docker deployment dengan monitoring Prometheus.
+A modular house price prediction pipeline built on the Kaggle *House Prices: Advanced Regression Techniques* dataset, with MLflow experiment tracking, structured logging, FastAPI model serving, Docker deployment and Prometheus monitoring. A Streamlit app shows the data, model performance and batch predictions.
 
-## Struktur
+## Highlights
+
+- **Reproducible training** with config-driven preprocessing and model code in `src/`
+- **Experiment tracking** in MLflow (RMSE, MAE, R², plus model and preprocessor artifacts)
+- **Model serving** through FastAPI with `/predict`, `/health` and a Prometheus `/metrics` endpoint
+- **Containerised** with Docker Compose (API + Prometheus)
+- **Structured JSON logging** and a pytest suite
+
+## Project structure
 
 ```text
 house_price_prediction/
@@ -32,31 +40,25 @@ house_price_prediction/
 └── requirements.txt
 ```
 
-## Setup Lokal
+## Local setup
 
 ```bash
 python -m venv .venv
-.venv\Scripts\activate
+.venv\Scripts\activate        # Windows (use source .venv/bin/activate on macOS/Linux)
 pip install -r requirements.txt
 ```
 
 ## Dataset
 
-Unduh dataset dari [Kaggle House Prices - Advanced Regression Techniques](https://www.kaggle.com/competitions/house-prices-advanced-regression-techniques/data), lalu letakkan file training di:
-
-```text
-data/train.csv
-```
-
-Atau gunakan Kaggle API:
+Download the data from [Kaggle House Prices - Advanced Regression Techniques](https://www.kaggle.com/competitions/house-prices-advanced-regression-techniques/data) and put the training file at `data/train.csv`, or use the Kaggle API:
 
 ```powershell
 powershell -ExecutionPolicy Bypass -File scripts/download_kaggle_data.ps1
 ```
 
-Sebelum menjalankan script, pastikan `kaggle.json` sudah ada di `C:\Users\<username>\.kaggle\kaggle.json` dan rules competition sudah di-accept di Kaggle.
+Before running the script, make sure `kaggle.json` is in `C:\Users\<username>\.kaggle\kaggle.json` and that you have accepted the competition rules on Kaggle.
 
-Pipeline memakai target `SalePrice` dan subset fitur berikut untuk training serta API serving:
+The pipeline predicts `SalePrice` from this feature subset, used for both training and serving:
 
 ```text
 OverallQual, GrLivArea, GarageCars, GarageArea, TotalBsmtSF, FullBath,
@@ -64,48 +66,38 @@ YearBuilt, YearRemodAdd, LotArea, Neighborhood, HouseStyle, ExterQual,
 KitchenQual, BsmtQual, GarageFinish
 ```
 
-Jika `data/train.csv` belum tersedia, pipeline akan membuat dataset sintetis dengan schema yang sama agar demo tetap bisa dijalankan.
+If `data/train.csv` is missing, the pipeline generates a synthetic dataset with the same schema so the demo still runs.
 
-## Training Model
-
-Jalankan training dengan:
+## Training
 
 ```bash
 python -m src.models.trainer
 ```
 
-Output utama:
+Outputs:
 
-- model tersimpan di `artifacts/model.joblib`
-- preprocessor tersimpan di `artifacts/preprocessor.joblib`
-- metrik training dilog ke MLflow: RMSE, MAE, dan R2
-- artifact joblib model dan preprocessor dilog ke MLflow
-- structured log tampil sebagai JSON di terminal
+- model saved to `artifacts/model.joblib`
+- preprocessor saved to `artifacts/preprocessor.joblib`
+- RMSE, MAE and R² logged to MLflow, along with both joblib artifacts
+- structured JSON logs in the terminal
 
-## Menjalankan API
+## Running the API
 
-Pastikan model sudah dilatih, lalu jalankan:
+After training, start the API:
 
 ```bash
 uvicorn src.api.main:app --host 0.0.0.0 --port 8000
 ```
 
-Endpoint:
+Endpoints: `GET /`, `GET /health`, `GET /metrics`, `POST /predict`. A simple frontend is served at `http://localhost:8000/`.
 
-- `GET /`
-- `GET /health`
-- `GET /metrics`
-- `POST /predict`
-
-Frontend sederhana tersedia di `http://localhost:8000/`.
-
-Di Windows PowerShell, frontend/API juga bisa dijalankan dengan:
+On Windows PowerShell you can also run:
 
 ```powershell
 powershell -ExecutionPolicy Bypass -File scripts/run_api.ps1
 ```
 
-Contoh request:
+Example request:
 
 ```bash
 curl -X POST http://localhost:8000/predict ^
@@ -119,8 +111,6 @@ curl -X POST http://localhost:8000/predict ^
 docker compose up --build
 ```
 
-Service:
-
 - FastAPI: `http://localhost:8000`
 - Prometheus: `http://localhost:9090`
 
@@ -130,35 +120,26 @@ Service:
 mlflow ui --backend-store-uri mlruns --port 5000
 ```
 
-Lalu buka `http://localhost:5000`.
+Then open `http://localhost:5000`.
 
-## Streamlit Portfolio
-
-Jalankan aplikasi portfolio Streamlit:
+## Streamlit app
 
 ```bash
 streamlit run streamlit_app.py
 ```
 
-Di Windows PowerShell:
+(or `powershell -ExecutionPolicy Bypass -File scripts/run_streamlit.ps1` on Windows)
 
-```powershell
-powershell -ExecutionPolicy Bypass -File scripts/run_streamlit.ps1
-```
+The Streamlit app includes:
 
-Fitur Streamlit:
+- an about section and project overview
+- CSV upload for batch house price predictions
+- feature distribution and correlation charts
+- model performance (RMSE, MAE, R²)
 
-- halaman branding "My Portfolio with Streamlit"
-- bagian Tentang Saya dan Proyek Saya
-- upload CSV untuk prediksi harga rumah
-- visualisasi distribusi fitur dan korelasi
-- visualisasi performa model dengan RMSE, MAE, dan R2
+For Streamlit Community Cloud, `runtime.txt` pins Python 3.11 so packages like `pandas` and `pyarrow` install from wheels instead of compiling from source.
 
-Untuk Streamlit Cloud, repo ini memakai `runtime.txt` agar deployment berjalan
-dengan Python 3.11. Ini mencegah package seperti `pandas` dan `pyarrow` dicompile
-dari source di Python yang terlalu baru.
-
-## Testing
+## Tests
 
 ```bash
 pytest
